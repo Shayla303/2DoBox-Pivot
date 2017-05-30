@@ -16,8 +16,9 @@ function ideasFromLocal() {
 ideasFromLocal();
 
 function clearInput() {
-  ideaTitleInput.val('');
-  ideaBodyInput.val('');
+  $('.title-input').val('');
+  $('.body-input').val('');
+  disableBtn();
 }
 
 function constructNewIdea(title, body) {
@@ -28,6 +29,8 @@ function constructNewIdea(title, body) {
 }
 
 function prependIdeaCard(newIdeaCard) {
+  // var ideaTitleInput = $('.title-input');
+  // var ideaBodyInput = $('.body-input');
   $('.bottom-section').prepend(`<section
     class="card-holder-section">
       <article class="idea-card" id=${newIdeaCard.id}>
@@ -52,17 +55,31 @@ function storeIdeaCard(newIdeaCard) {
   localStorage.setItem(newIdeaCard.id, JSON.stringify(newIdeaCard));
 }
 
-$('.save-button').on('click', function(event) {
-    event.preventDefault();
+function createIdea(event) {
+  event.preventDefault();
   var ideaTitle = ideaTitleInput.val();
   var ideaBody = ideaBodyInput.val();
   var newIdeaCard = new constructNewIdea(ideaTitle, ideaBody);
   constructNewIdea();
   prependIdeaCard(newIdeaCard);
   storeIdeaCard(newIdeaCard);
-});
+};
 
-$('.bottom-section').on('click','button.delete-button', function() {
+function disableBtn () {
+  var title = $('.title-input').val();
+  var body = $('.body-input').val();
+  var hasContent = ((title === "") || (body === ""));
+  console.log('hasContent')
+  $('.save-button').attr('disabled', hasContent);
+}
+
+$('.save-button').on('click', createIdea);
+
+$('.title-input').on('input', disableBtn)
+
+$('.body-input').on('input', disableBtn)
+
+$('.bottom-section').on('click','.delete-button', function() {
   var id = $(this).closest('.idea-card').prop('id');
   localStorage.removeItem(id);
   $(this).parents('.idea-card').remove();
@@ -126,11 +143,11 @@ $('.bottom-section').on('click', 'button.downvote-button', function() {
   localStorage.setItem(id, JSON.stringify(parseIdea));
 })
 
-$('.search-box').on('input', function() {
-  var searchResult = $(this).val().toUpperCase();
-  console.log(searchResult)
+$('.search-box').on('keyup blur', function(e) {
+  var search = e.target.value.toUpperCase();
+  console.log(search)
   var results = ideaArray.filter(function(idea) {
-   return idea.title.toUpperCase().includes(searchResult) || idea.body.toUpperCase().includes(searchResult)
+   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.body.toUpperCase().includes(search)
   })
   $('.bottom-section').empty();
  results.forEach(function(result){
