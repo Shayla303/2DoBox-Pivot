@@ -135,7 +135,7 @@ function voteDown() {
 function search(e) {
   var search = e.target.value.toUpperCase();
   var results = ideaArray.filter(function(newIdeaCard) {
-   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.body.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
+   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.task.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
   })
   $('.bottom-section').empty();
  results.forEach(function(result){
