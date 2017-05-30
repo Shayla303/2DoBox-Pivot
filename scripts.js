@@ -1,5 +1,3 @@
-var ideaTitleInput = $('.title-input');
-var ideaBodyInput = $('.body-input');
 var ideaArray = [];
 
 function ideasFromLocal() {
@@ -29,8 +27,6 @@ function constructNewIdea(title, body) {
 }
 
 function prependIdeaCard(newIdeaCard) {
-  // var ideaTitleInput = $('.title-input');
-  // var ideaBodyInput = $('.body-input');
   $('.bottom-section').prepend(`<section
     class="card-holder-section">
       <article class="idea-card" id=${newIdeaCard.id}>
@@ -57,8 +53,8 @@ function storeIdeaCard(newIdeaCard) {
 
 function createIdea(event) {
   event.preventDefault();
-  var ideaTitle = ideaTitleInput.val();
-  var ideaBody = ideaBodyInput.val();
+  var ideaTitle = $('.title-input').val();
+  var ideaBody = $('.body-input').val();
   var newIdeaCard = new constructNewIdea(ideaTitle, ideaBody);
   constructNewIdea();
   prependIdeaCard(newIdeaCard);
@@ -136,6 +132,17 @@ function voteDown() {
   localStorage.setItem(id, JSON.stringify(parseIdea));
 }
 
+function search(e) {
+  var search = e.target.value.toUpperCase();
+  var results = ideaArray.filter(function(newIdeaCard) {
+   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.body.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
+  })
+  $('.bottom-section').empty();
+ results.forEach(function(result){
+   prependIdeaCard(result);
+ })
+}
+
 $('.save-button').on('click', createIdea);
 
 $('.title-input').on('input', disableBtn);
@@ -156,14 +163,4 @@ $('.bottom-section').on('click', 'button.upvote-button', voteUp);
 
 $('.bottom-section').on('click', 'button.downvote-button', voteDown);
 
-$('.search-box').on('keyup blur', function(e) {
-  var search = e.target.value.toUpperCase();
-  console.log(search)
-  var results = ideaArray.filter(function(newIdeaCard) {
-   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.body.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
-  })
-  $('.bottom-section').empty();
- results.forEach(function(result){
-   prependIdeaCard(result);
- })
-})
+$('.search-box').on('keyup blur', search)
