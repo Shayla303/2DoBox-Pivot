@@ -1,6 +1,5 @@
-var ideaArray = [];
-
 function ideasFromLocal() {
+  var ideaArray = [];
   var keys = Object.keys(localStorage);
   var keyLength = keys.length;
     for (var i = 0; i < keyLength; i++) {
@@ -133,6 +132,7 @@ function voteDown() {
 }
 
 function search(e) {
+  var ideaArray = ideasFromLocal();
   var search = e.target.value.toUpperCase();
   var results = ideaArray.filter(function(newIdeaCard) {
    return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.task.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
