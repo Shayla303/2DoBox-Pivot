@@ -69,30 +69,30 @@ function disableBtn () {
   var title = $('.title-input').val();
   var body = $('.body-input').val();
   var hasContent = ((title === "") || (body === ""));
-  console.log('hasContent')
   $('.save-button').attr('disabled', hasContent);
 }
 
-$('.save-button').on('click', createIdea);
-
-$('.title-input').on('input', disableBtn)
-
-$('.body-input').on('input', disableBtn)
-
-$('.bottom-section').on('click','.delete-button', function() {
+function deleteIdea () {
   var id = $(this).closest('.idea-card').prop('id');
   localStorage.removeItem(id);
   $(this).parents('.idea-card').remove();
-});
+}
 
-$('.bottom-section').on('keyup focusout','.idea-card-header',function() {
+function titleContent() {
   var id = $(this).closest('.idea-card').prop('id');
   var parseIdea = JSON.parse(localStorage.getItem(id));
   parseIdea.title = $(this).text();
   localStorage.setItem(id, JSON.stringify(parseIdea));
-})
+}
 
-$('.bottom-section').on('keypress','.idea-card-header',function(event) {
+function bodyContent() {
+  var id = $(this).closest('.idea-card').prop('id');
+  var parseIdea = JSON.parse(localStorage.getItem(id));
+  parseIdea.body = $(this).text();
+  localStorage.setItem(id, JSON.stringify(parseIdea));
+}
+
+function saveTitleOnEnter(event) {
   if (event.which == 13) {
     document.execCommand("DefaultParagraphSeparator", false, "p")
     var id = $(this).closest('.idea-card').prop('id');
@@ -100,26 +100,19 @@ $('.bottom-section').on('keypress','.idea-card-header',function(event) {
     parseIdea.title = $(this).text();
     localStorage.setItem(id, JSON.stringify(parseIdea));
   }
-})
+}
 
-$('.bottom-section').on('keyup focusout','.article-text-container',function() {
-  var id = $(this).closest('.idea-card').prop('id');
-  var parseIdea = JSON.parse(localStorage.getItem(id));
-  parseIdea.body = $(this).text();
-  localStorage.setItem(id, JSON.stringify(parseIdea));
-})
-
-$('.bottom-section').on('keydown','.article-text-container',function(event) {
+function saveBodyOnEnter(event) {
   if (event.which == 13) {
     document.execCommand("DefaultParagraphSeparator", false, "p");
     var id = $(this).closest('.idea-card').prop('id');
     var parseIdea = JSON.parse(localStorage.getItem(id));
-    parseIdea.title = $(this).text();
+    parseIdea.body = $(this).text();
     localStorage.setItem(id, JSON.stringify(parseIdea));
   }
-})
+}
 
-$('.bottom-section').on('click', 'button.upvote-button', function() {
+function voteUp() {
   var id = $(this).closest('.idea-card').prop('id');
   var parseIdea = JSON.parse(localStorage.getItem(id));
     if (parseIdea.quality === 'Swill') {
@@ -129,9 +122,9 @@ $('.bottom-section').on('click', 'button.upvote-button', function() {
     }
   parseIdea.quality = $(this).siblings('p').children().text();
   localStorage.setItem(id, JSON.stringify(parseIdea));
-})
+}
 
-$('.bottom-section').on('click', 'button.downvote-button', function() {
+function voteDown() {
   var id = $(this).closest('.idea-card').prop('id');
   var parseIdea = JSON.parse(localStorage.getItem(id));
     if (parseIdea.quality === 'Genius') {
@@ -141,7 +134,27 @@ $('.bottom-section').on('click', 'button.downvote-button', function() {
     }
   parseIdea.quality = $(this).siblings('p').children().text();
   localStorage.setItem(id, JSON.stringify(parseIdea));
-})
+}
+
+$('.save-button').on('click', createIdea);
+
+$('.title-input').on('input', disableBtn);
+
+$('.body-input').on('input', disableBtn);
+
+$('.bottom-section').on('click','.delete-button', deleteIdea);
+
+$('.bottom-section').on('keyup focusout','.idea-card-header', titleContent);
+
+$('.bottom-section').on('keyup focusout','.article-text-container', bodyContent);
+
+$('.bottom-section').on('keypress','.idea-card-header', saveTitleOnEnter);
+
+$('.bottom-section').on('keypress','.article-text-container', saveBodyOnEnter);
+
+$('.bottom-section').on('click', 'button.upvote-button', voteUp);
+
+$('.bottom-section').on('click', 'button.downvote-button', voteDown);
 
 $('.search-box').on('keyup blur', function(e) {
   var search = e.target.value.toUpperCase();
