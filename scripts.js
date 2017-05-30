@@ -15,13 +15,13 @@ ideasFromLocal();
 
 function clearInput() {
   $('.title-input').val('');
-  $('.body-input').val('');
+  $('.task-input').val('');
   disableBtn();
 }
 
 function constructNewIdea(title, body) {
   this.title = title;
-  this.body = body;
+  this.task = body;
   this.id = Date.now();
   this.quality = 'Swill';
 }
@@ -35,7 +35,7 @@ function prependIdeaCard(newIdeaCard) {
           <button class="delete-button" type="button" name="button"></button>
         </div>
         <div>
-          <p contenteditable='true' class="article-text-container">${newIdeaCard.body}</p>
+          <p contenteditable='true' class="article-text-container">${newIdeaCard.task}</p>
         </div>
         <div class="quality-control-container">
         <button class="upvote-button" type="button" name="button"></button>
@@ -54,8 +54,8 @@ function storeIdeaCard(newIdeaCard) {
 function createIdea(event) {
   event.preventDefault();
   var ideaTitle = $('.title-input').val();
-  var ideaBody = $('.body-input').val();
-  var newIdeaCard = new constructNewIdea(ideaTitle, ideaBody);
+  var ideaTask = $('.task-input').val();
+  var newIdeaCard = new constructNewIdea(ideaTitle, ideaTask);
   constructNewIdea();
   prependIdeaCard(newIdeaCard);
   storeIdeaCard(newIdeaCard);
@@ -63,8 +63,8 @@ function createIdea(event) {
 
 function disableBtn () {
   var title = $('.title-input').val();
-  var body = $('.body-input').val();
-  var hasContent = ((title === "") || (body === ""));
+  var task = $('.task-input').val();
+  var hasContent = ((title === "") || (task === ""));
   $('.save-button').attr('disabled', hasContent);
 }
 
@@ -84,7 +84,7 @@ function titleContent() {
 function bodyContent() {
   var id = $(this).closest('.idea-card').prop('id');
   var parseIdea = JSON.parse(localStorage.getItem(id));
-  parseIdea.body = $(this).text();
+  parseIdea.task = $(this).text();
   localStorage.setItem(id, JSON.stringify(parseIdea));
 }
 
@@ -98,12 +98,12 @@ function saveTitleOnEnter(event) {
   }
 }
 
-function saveBodyOnEnter(event) {
+function saveTaskOnEnter(event) {
   if (event.which == 13) {
     document.execCommand("DefaultParagraphSeparator", false, "p");
     var id = $(this).closest('.idea-card').prop('id');
     var parseIdea = JSON.parse(localStorage.getItem(id));
-    parseIdea.body = $(this).text();
+    parseIdea.task = $(this).text();
     localStorage.setItem(id, JSON.stringify(parseIdea));
   }
 }
@@ -147,7 +147,7 @@ $('.save-button').on('click', createIdea);
 
 $('.title-input').on('input', disableBtn);
 
-$('.body-input').on('input', disableBtn);
+$('.task-input').on('input', disableBtn);
 
 $('.bottom-section').on('click','.delete-button', deleteIdea);
 
@@ -157,7 +157,7 @@ $('.bottom-section').on('keyup focusout','.article-text-container', bodyContent)
 
 $('.bottom-section').on('keypress','.idea-card-header', saveTitleOnEnter);
 
-$('.bottom-section').on('keypress','.article-text-container', saveBodyOnEnter);
+$('.bottom-section').on('keypress','.article-text-container', saveTaskOnEnter);
 
 $('.bottom-section').on('click', 'button.upvote-button', voteUp);
 
