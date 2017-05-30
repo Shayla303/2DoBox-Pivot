@@ -55,6 +55,11 @@ span {
   width: 75%;
 }
 
+.title-input,
+.task-input,.search-box:focus {
+  outline-color: #00A79D;
+  }
+
 .web-inputs::-webkit-input-placeholder {
   color: #D1D3D4;
 }
