@@ -159,8 +159,8 @@ $('.bottom-section').on('click', 'button.downvote-button', voteDown);
 $('.search-box').on('keyup blur', function(e) {
   var search = e.target.value.toUpperCase();
   console.log(search)
-  var results = ideaArray.filter(function(idea) {
-   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.body.toUpperCase().includes(search)
+  var results = ideaArray.filter(function(newIdeaCard) {
+   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.body.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
   })
   $('.bottom-section').empty();
  results.forEach(function(result){
