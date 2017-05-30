@@ -1,5 +1,5 @@
 var ideaTitleInput = $('.title-input');
-var ideaBodyInput = $('.body-input');
+var ideaTaskInput = $('.task-input');
 var ideaArray = [];
 
 function ideasFromLocal() {
@@ -17,20 +17,18 @@ ideasFromLocal();
 
 function clearInput() {
   $('.title-input').val('');
-  $('.body-input').val('');
+  $('.task-input').val('');
   disableBtn();
 }
 
 function constructNewIdea(title, body) {
   this.title = title;
-  this.body = body;
+  this.task = body;
   this.id = Date.now();
   this.quality = 'Swill';
 }
 
 function prependIdeaCard(newIdeaCard) {
-  // var ideaTitleInput = $('.title-input');
-  // var ideaBodyInput = $('.body-input');
   $('.bottom-section').prepend(`<section
     class="card-holder-section">
       <article class="idea-card" id=${newIdeaCard.id}>
@@ -39,7 +37,7 @@ function prependIdeaCard(newIdeaCard) {
           <button class="delete-button" type="button" name="button"></button>
         </div>
         <div>
-          <p contenteditable='true' class="article-text-container">${newIdeaCard.body}</p>
+          <p contenteditable='true' class="article-text-container">${newIdeaCard.task}</p>
         </div>
         <div class="quality-control-container">
         <button class="upvote-button" type="button" name="button"></button>
@@ -58,8 +56,8 @@ function storeIdeaCard(newIdeaCard) {
 function createIdea(event) {
   event.preventDefault();
   var ideaTitle = ideaTitleInput.val();
-  var ideaBody = ideaBodyInput.val();
-  var newIdeaCard = new constructNewIdea(ideaTitle, ideaBody);
+  var ideaTask = ideaTaskInput.val();
+  var newIdeaCard = new constructNewIdea(ideaTitle, ideaTask);
   constructNewIdea();
   prependIdeaCard(newIdeaCard);
   storeIdeaCard(newIdeaCard);
@@ -67,8 +65,8 @@ function createIdea(event) {
 
 function disableBtn () {
   var title = $('.title-input').val();
-  var body = $('.body-input').val();
-  var hasContent = ((title === "") || (body === ""));
+  var task = $('.task-input').val();
+  var hasContent = ((title === "") || (task === ""));
   $('.save-button').attr('disabled', hasContent);
 }
 
@@ -88,7 +86,7 @@ function titleContent() {
 function bodyContent() {
   var id = $(this).closest('.idea-card').prop('id');
   var parseIdea = JSON.parse(localStorage.getItem(id));
-  parseIdea.body = $(this).text();
+  parseIdea.task = $(this).text();
   localStorage.setItem(id, JSON.stringify(parseIdea));
 }
 
@@ -102,12 +100,12 @@ function saveTitleOnEnter(event) {
   }
 }
 
-function saveBodyOnEnter(event) {
+function saveTaskOnEnter(event) {
   if (event.which == 13) {
     document.execCommand("DefaultParagraphSeparator", false, "p");
     var id = $(this).closest('.idea-card').prop('id');
     var parseIdea = JSON.parse(localStorage.getItem(id));
-    parseIdea.body = $(this).text();
+    parseIdea.task = $(this).text();
     localStorage.setItem(id, JSON.stringify(parseIdea));
   }
 }
@@ -140,7 +138,7 @@ $('.save-button').on('click', createIdea);
 
 $('.title-input').on('input', disableBtn);
 
-$('.body-input').on('input', disableBtn);
+$('.task-input').on('input', disableBtn);
 
 $('.bottom-section').on('click','.delete-button', deleteIdea);
 
@@ -150,7 +148,7 @@ $('.bottom-section').on('keyup focusout','.article-text-container', bodyContent)
 
 $('.bottom-section').on('keypress','.idea-card-header', saveTitleOnEnter);
 
-$('.bottom-section').on('keypress','.article-text-container', saveBodyOnEnter);
+$('.bottom-section').on('keypress','.article-text-container', saveTaskOnEnter);
 
 $('.bottom-section').on('click', 'button.upvote-button', voteUp);
 
@@ -160,7 +158,7 @@ $('.search-box').on('keyup blur', function(e) {
   var search = e.target.value.toUpperCase();
   console.log(search)
   var results = ideaArray.filter(function(newIdeaCard) {
-   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.body.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
+   return newIdeaCard.title.toUpperCase().includes(search) || newIdeaCard.task.toUpperCase().includes(search) || newIdeaCard.quality.toUpperCase().includes(search);
   })
   $('.bottom-section').empty();
  results.forEach(function(result){
