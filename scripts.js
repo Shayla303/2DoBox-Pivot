@@ -28,9 +28,9 @@ function constructNewIdea(title, body) {
 function prependIdeaCard(newIdeaCard) {
   $('.bottom-section').prepend(`<section
     class="card-holder-section">
-      <article class="idea-card" id=${newIdeaCard.id}>
+      <article class="idea-card ${newIdeaCard.completed}" id=${newIdeaCard.id}>
         <div class="idea-name-section">
-          <h2 contenteditable='true' class="idea-card-header">${newIdeaCard.title}</h2>
+          <h2 contenteditable='true' class="idea-card-header ${newIdeaCard.crossedOut}">${newIdeaCard.title}</h2>
           <button class="delete-button" type="button" name="button"></button>
         </div>
         <div>
@@ -40,7 +40,7 @@ function prependIdeaCard(newIdeaCard) {
         <button class="upvote-button" type="button" name="button"></button>
         <button class="downvote-button" type="button" name="button"></button>
         <p>quality: <span class="quality">${newIdeaCard.quality}</p>
-        </div>
+        <button class="complete" type="button" name="complete">Complete Task</button></div>
       </article>
     </section>`);
   clearInput();
@@ -143,6 +143,16 @@ function search(e) {
  })
 }
 
+function completeTask () {
+  var id = $(this).closest('.idea-card').prop('id');
+  var parseIdea = JSON.parse(localStorage.getItem(id));
+  $(this).closest('.idea-card').toggleClass('completed');
+  $(this).parents('.idea-card').find('h2').toggleClass('crossed-out');
+  parseIdea.crossedOut = $(this).parents('.idea-card').find('h2').attr('class');
+  parseIdea.completed = $(this).closest('.idea-card').attr('class');
+  localStorage.setItem(id, JSON.stringify(parseIdea));
+}
+
 $('.save-button').on('click', createIdea);
 
 $('.title-input').on('input', disableBtn);
@@ -162,5 +172,7 @@ $('.bottom-section').on('keypress','.article-text-container', saveTaskOnEnter);
 $('.bottom-section').on('click', 'button.upvote-button', voteUp);
 
 $('.bottom-section').on('click', 'button.downvote-button', voteDown);
+
+$('.bottom-section').on('click', 'button.complete', completeTask);
 
 $('.search-box').on('keyup blur', search)

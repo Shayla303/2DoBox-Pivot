@@ -119,8 +119,11 @@ span {
 .quality-control-container {
   color:  #6D6E71;
   display: flex;
+  flex-wrap: wrap;
   font-size: 18px;
   justify-content: flex-start;
+  align-items: center;
+  width: 100%;
 }
 
 .upvote-button {
@@ -130,7 +133,6 @@ span {
   background-size: contain;
   border: none;
   margin-right: 25px;
-  margin-top: 18px;
   height: 30px;
   width: 30px;
 }
@@ -146,7 +148,6 @@ span {
   background-size: contain;
   border: none;
   margin-right: 25px;
-  margin-top: 18px;
   height: 30px;
   width: 30px;
 }
@@ -155,12 +156,29 @@ span {
   background-image: url(assets/downvote-hover.svg);
 }
 
+.complete {
+  background-color: #00A79D;
+  color: #FFF;
+  border: none;
+  display: flex;
+  height: 35px;
+  justify-content: center;
+  margin-left: auto;
+  width: 150px;
+}
+
+.completed {
+  background-color: #f2f2f3;
+}
+
+.crossed-out {
+  text-decoration: line-through;
+}
+
 @media (max-width: 375px){
 
   .article-text-container {
     font-size: 14px;
 
   }
-
-
 }
