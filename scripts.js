@@ -2,11 +2,23 @@ function ideasFromLocal() {
   var ideaArray = [];
   var keys = Object.keys(localStorage);
   var keyLength = keys.length;
-    for (var i = 0; i < keyLength; i++) {
+    for (var i = 0; i < 10; i++) {
       prependIdeaCard(JSON.parse(localStorage.getItem(keys[i])));
     }
     for (var j = 0; j < keyLength; j++) {
       ideaArray.push(JSON.parse(localStorage.getItem(keys[j])));
+    } return ideaArray;
+}
+
+function moreIdeasFromLocal() {
+  var ideaArray = [];
+  var keys = Object.keys(localStorage);
+  var keyLength = keys.length;
+    for (var i = 11; i < keyLength; i++) {
+      prependIdeaCard(JSON.parse(localStorage.getItem(keys[i])));
+    }
+    for (var j = 0; j < keyLength; j++) {
+      ideaArray.splice(JSON.parse(localStorage.getItem(keys[j])));
     } return ideaArray;
 }
 
@@ -22,7 +34,7 @@ function constructNewIdea(title, body) {
   var importance = ['None', 'Low', 'Normal', 'High', 'Critical'];
   this.title = title;
   this.task = body;
-  this.id = Date.now();
+  this.id = Date.now();;
   this.quality = importance[2];
 }
 
@@ -175,3 +187,5 @@ $('.bottom-section').on('click', 'button.downvote-button', voteDown);
 $('.bottom-section').on('click', 'button.complete', completeTask);
 
 $('.search-box').on('keyup blur', search)
+
+$('.more-todos').on('click', moreIdeasFromLocal)

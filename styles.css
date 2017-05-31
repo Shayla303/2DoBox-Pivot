@@ -13,6 +13,7 @@ body, html, section, main, div, aside {
 body {
   height: 100%;
   width: 100%;
+  margin: 0;
 }
 
 h1{
@@ -68,6 +69,7 @@ span {
   background-color: #00A79D;
   border: none;
   color: #FFFFFF;
+  cursor: pointer;
   font-size: 22px;
 }
 
@@ -159,6 +161,7 @@ span {
 .complete {
   background-color: #00A79D;
   color: #FFF;
+  cursor: pointer;
   border: none;
   display: flex;
   height: 35px;
@@ -167,12 +170,29 @@ span {
   width: 150px;
 }
 
+.complete:hover {
+  background-color: #045E55;
+}
+
 .completed {
   background-color: #f2f2f3;
 }
 
 .crossed-out {
   text-decoration: line-through;
+}
+
+.more-todos {
+  background-color: #00A79D;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 22px;
+  margin-bottom: 0;
+}
+
+.more-todos:hover {
+  background-color: #045E55;
 }
 
 @media (max-width: 375px){
