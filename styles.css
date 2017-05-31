@@ -195,6 +195,23 @@ span {
   background-color: #045E55;
 }
 
+.filter-buttons {
+  align-items: center;
+  display: flex;
+  height: 7vh;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.importance {
+  background-color: #00A79D;
+  border: none;
+  color: #FFF;
+  cursor: pointer;
+  
+}
+
 @media (max-width: 375px){
 
   .article-text-container {

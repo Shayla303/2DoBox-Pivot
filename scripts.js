@@ -1,4 +1,5 @@
 function ideasFromLocal() {
+  $('.bottom-section').empty()
   var ideaArray = [];
   var keys = Object.keys(localStorage);
   var keyLength = keys.length;
@@ -8,32 +9,16 @@ function ideasFromLocal() {
     for (var j = 0; j < keyLength; j++) {
       ideaArray.push(JSON.parse(localStorage.getItem(keys[j])));
     }
-
-    var filteredIdeas = ideaArray.filter(function (idea,i){
-      return i<=9;
-    })
-
-
-
-
     return ideaArray
 }
 
-// function moreIdeasFromLocal() {
-//   var ideaArray = [];
-//   var keys = Object.keys(localStorage);
-//   var keyLength = keys.length;
-//     for (var i = 0; i < keyLength; i++) {
-//       prependIdeaCard(JSON.parse(localStorage.getItem(keys[i])));
-//     }
-//     for (var j = 0; j < keyLength; j++) {
-//       ideaArray.splice(JSON.parse(localStorage.getItem(keys[j])));
-//     } return ideaArray;
-// }
-
-//event listener on show more todos that will trigger show less to do's on button
+function showTen () {
+  $('.idea-card').slice(10).css("display", "none")
+}
 
 ideasFromLocal();
+
+showTen();
 
 function clearInput() {
   $('.title-input').val('');
@@ -199,4 +184,4 @@ $('.bottom-section').on('click', 'button.complete', completeTask);
 
 $('.search-box').on('keyup blur', search)
 
-// $('.more-todos').on('click', moreIdeasFromLocal)
+$('.more-todos').on('click', ideasFromLocal)
