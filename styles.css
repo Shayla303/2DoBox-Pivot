@@ -199,9 +199,9 @@ span {
   align-items: center;
   display: flex;
   height: 7vh;
-  justify-content: center;
-  margin-bottom: 20px;
-  width: 100%;
+  justify-content: space-around;
+  margin: 0 auto 20px;
+  width: 80%;
 }
 
 .importance {
@@ -209,7 +209,12 @@ span {
   border: none;
   color: #FFF;
   cursor: pointer;
-  
+  height: 35px;
+  width: 150px;
+}
+
+.importance:hover {
+    background-color: #045E55;
 }
 
 @media (max-width: 375px){
