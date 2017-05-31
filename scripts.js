@@ -19,10 +19,11 @@ function clearInput() {
 }
 
 function constructNewIdea(title, body) {
+  var importance = ['None', 'Low', 'Normal', 'High', 'Critical'];
   this.title = title;
   this.task = body;
   this.id = Date.now();
-  this.quality = 'Swill';
+  this.quality = importance[2];
 }
 
 function prependIdeaCard(newIdeaCard) {
@@ -39,7 +40,7 @@ function prependIdeaCard(newIdeaCard) {
         <div class="quality-control-container">
         <button class="upvote-button" type="button" name="button"></button>
         <button class="downvote-button" type="button" name="button"></button>
-        <p>quality: <span class="quality">${newIdeaCard.quality}</p>
+        <p>Importance: <span class="quality">${newIdeaCard.quality}</p>
         <button class="complete" type="button" name="complete">Complete Task</button></div>
       </article>
     </section>`);
@@ -108,25 +109,23 @@ function saveTaskOnEnter(event) {
 }
 
 function voteUp() {
+  var importance = ['None', 'Low', 'Normal', 'High', 'Critical'];
   var id = $(this).closest('.idea-card').prop('id');
   var parseIdea = JSON.parse(localStorage.getItem(id));
-    if (parseIdea.quality === 'Swill') {
-      $(this).siblings('p').children().text('Plausible');
-    } else if (parseIdea.quality === 'Plausible') {
-      $(this).siblings('p').children().text('Genius');
-    }
+  var important = $(this).siblings('p').children().text()
+  var index = importance.indexOf(important);
+  $(this).siblings('p').children().text(importance[index + 1]);
   parseIdea.quality = $(this).siblings('p').children().text();
   localStorage.setItem(id, JSON.stringify(parseIdea));
 }
 
 function voteDown() {
+  var importance = ['None', 'Low', 'Normal', 'High', 'Critical'];
   var id = $(this).closest('.idea-card').prop('id');
   var parseIdea = JSON.parse(localStorage.getItem(id));
-    if (parseIdea.quality === 'Genius') {
-      $(this).siblings('p').children().text('Plausible');
-    } else if (parseIdea.quality === 'Plausible') {
-      $(this).siblings('p').children().text('Swill');
-    }
+  var important = $(this).siblings('p').children().text()
+  var index = importance.indexOf(important);
+  $(this).siblings('p').children().text(importance[index - 1]);
   parseIdea.quality = $(this).siblings('p').children().text();
   localStorage.setItem(id, JSON.stringify(parseIdea));
 }
