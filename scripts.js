@@ -159,6 +159,26 @@ function completeTask () {
   parseIdea.completed = $(this).closest('.idea-card').attr('class');
   localStorage.setItem(id, JSON.stringify(parseIdea));
 }
+//
+// function clearCardSection() {
+//   #()
+// }
+
+function findImportance() {
+  var ideaArray = ideasFromLocal();
+  var buttonText = $(this).text();
+  var results = ideaArray.filter(function(newIdeaCard) {
+    return newIdeaCard.quality === buttonText;
+  })
+  $('.bottom-section').empty();
+ results.forEach(function(result){
+   prependIdeaCard(result);
+ })
+}
+
+
+
+
 
 $('.save-button').on('click', createIdea);
 
@@ -185,3 +205,13 @@ $('.bottom-section').on('click', 'button.complete', completeTask);
 $('.search-box').on('keyup blur', search)
 
 $('.more-todos').on('click', ideasFromLocal)
+
+$('.none-btn').on('click', findImportance)
+
+$('.low-btn').on('click', findImportance)
+
+$('.normal-btn').on('click', findImportance)
+
+$('.high-btn').on('click', findImportance)
+
+$('.critical-btn').on('click', findImportance)
