@@ -173,6 +173,19 @@ function removeCompleted() {
   })
 };
 
+function showCompleted() {
+  var ideaArray = ideasFromLocal();
+  var toDos = ideaArray.filter(function(todo) {
+    return todo.completed;
+  });
+  $('.bottom-section').empty();
+  ideasFromLocal();
+  removeCompleted();
+  toDos.forEach(function(toDo){
+    prependIdeaCard(toDo)
+  });
+};
+
 function findImportance() {
   var ideaArray = ideasFromLocal();
   var buttonText = $(this).text();
@@ -186,6 +199,7 @@ function findImportance() {
 }
 
 $('.save-button').on('click', createIdea);
+$('.show-completed').on('click', showCompleted)
 $('.title-input').on('input', disableBtn);
 $('.task-input').on('input', disableBtn);
 $('.bottom-section').on('click','.delete-button', deleteIdea);
@@ -199,7 +213,7 @@ $('.bottom-section').on('click', 'button.complete', completeTask);
 $('.search-box').on('keyup blur', search)
 $('.more-todos').click(function(event) {
     ideasFromLocal();
-    removeCompleted()
+    removeCompleted();
   });
 $('.none-btn').on('click', findImportance)
 $('.low-btn').on('click', findImportance)
