@@ -73,8 +73,12 @@ span {
   font-size: 22px;
 }
 
-.save-button:hover {
-  background-color: #045E55;
+.show-completed {
+  background-color: #00A79D;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 22px;
 }
 
 .search-box {
@@ -108,10 +112,6 @@ span {
   width: 30px;
 }
 
-.delete-button:hover {
-  background-image: url(assets/delete-hover.svg);
-}
-
 .article-text-container {
   color: #939598;
   font-size: 18px;
@@ -139,10 +139,6 @@ span {
   width: 30px;
 }
 
-.upvote-button:hover{
-  background-image: url(assets/upvote-hover.svg);
-}
-
 .downvote-button {
   background: none;
   background-image: url(assets/downvote.svg);
@@ -152,10 +148,6 @@ span {
   margin-right: 25px;
   height: 30px;
   width: 30px;
-}
-
-.downvote-button:hover {
-  background-image: url(assets/downvote-hover.svg);
 }
 
 .complete {
@@ -170,12 +162,6 @@ span {
   width: 150px;
 }
 
-.complete:hover {
-  background-color: #045E55;
-}
-
-
-
 .more-todos {
   background-color: #00A79D;
   border: none;
@@ -184,8 +170,6 @@ span {
   font-size: 22px;
   margin-bottom: 0;
 }
-
-
 
 .filter-buttons {
   align-items: center;
@@ -205,9 +189,31 @@ span {
   width: 150px;
 }
 
-
-
 /* Hovers */
+
+.save-button:hover {
+  background-color: #045E55;
+}
+
+.show-completed:hover {
+  background-color: #045E55;
+}
+
+.delete-button:hover {
+  background-image: url(assets/delete-hover.svg);
+}
+
+.upvote-button:hover{
+  background-image: url(assets/upvote-hover.svg);
+}
+
+.downvote-button:hover {
+  background-image: url(assets/downvote-hover.svg);
+}
+
+.complete:hover {
+  background-color: #045E55;
+}
 
 .importance:hover {
     background-color: #045E55;
