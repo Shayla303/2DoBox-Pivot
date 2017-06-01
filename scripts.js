@@ -1,4 +1,5 @@
 function ideasFromLocal() {
+  $('.bottom-section').empty()
   var ideaArray = [];
   var keys = Object.keys(localStorage);
   var keyLength = keys.length;
@@ -7,10 +8,17 @@ function ideasFromLocal() {
     }
     for (var j = 0; j < keyLength; j++) {
       ideaArray.push(JSON.parse(localStorage.getItem(keys[j])));
-    } return ideaArray;
+    }
+    return ideaArray
+}
+
+function showTen () {
+  $('.idea-card').slice(10).css("display", "none")
 }
 
 ideasFromLocal();
+
+showTen();
 
 function clearInput() {
   $('.title-input').val('');
@@ -175,3 +183,5 @@ $('.bottom-section').on('click', 'button.downvote-button', voteDown);
 $('.bottom-section').on('click', 'button.complete', completeTask);
 
 $('.search-box').on('keyup blur', search)
+
+$('.more-todos').on('click', ideasFromLocal)
