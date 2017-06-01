@@ -12,13 +12,15 @@ function ideasFromLocal() {
     return ideaArray
 }
 
+ideasFromLocal();
+
+removeCompleted();
+
+showTen();
+
 function showTen () {
   $('.idea-card').slice(10).css("display", "none")
 }
-
-ideasFromLocal();
-
-showTen();
 
 function clearInput() {
   $('.title-input').val('');
@@ -159,10 +161,17 @@ function completeTask () {
   parseIdea.completed = $(this).closest('.idea-card').attr('class');
   localStorage.setItem(id, JSON.stringify(parseIdea));
 }
-//
-// function clearCardSection() {
-//   #()
-// }
+
+function removeCompleted() {
+  var ideaArray = ideasFromLocal();
+  var toDos = ideaArray.filter(function(todo) {
+    return !todo.completed;
+  });
+  $('.bottom-section').empty();
+  toDos.forEach(function(toDo){
+    prependIdeaCard(toDo)
+  })
+};
 
 function findImportance() {
   var ideaArray = ideasFromLocal();
@@ -176,42 +185,24 @@ function findImportance() {
  })
 }
 
-
-
-
-
 $('.save-button').on('click', createIdea);
-
 $('.title-input').on('input', disableBtn);
-
 $('.task-input').on('input', disableBtn);
-
 $('.bottom-section').on('click','.delete-button', deleteIdea);
-
 $('.bottom-section').on('keyup focusout','.idea-card-header', titleContent);
-
 $('.bottom-section').on('keyup focusout','.article-text-container', bodyContent);
-
 $('.bottom-section').on('keypress','.idea-card-header', saveTitleOnEnter);
-
 $('.bottom-section').on('keypress','.article-text-container', saveTaskOnEnter);
-
 $('.bottom-section').on('click', 'button.upvote-button', voteUp);
-
 $('.bottom-section').on('click', 'button.downvote-button', voteDown);
-
 $('.bottom-section').on('click', 'button.complete', completeTask);
-
 $('.search-box').on('keyup blur', search)
-
-$('.more-todos').on('click', ideasFromLocal)
-
+$('.more-todos').click(function(event) {
+    ideasFromLocal();
+    removeCompleted()
+  });
 $('.none-btn').on('click', findImportance)
-
 $('.low-btn').on('click', findImportance)
-
 $('.normal-btn').on('click', findImportance)
-
 $('.high-btn').on('click', findImportance)
-
 $('.critical-btn').on('click', findImportance)
